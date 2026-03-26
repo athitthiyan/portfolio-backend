@@ -6,12 +6,11 @@ from app.models import project, contact  # noqa: F401 — registers models with 
 
 app = FastAPI()
 
-# CORS — allow_credentials=True is incompatible with allow_origins=["*"]
-# Using specific origins instead
+# CORS — public portfolio API, allow all origins
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200", "http://localhost:3000"],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -25,3 +24,7 @@ except Exception as e:
 # Routes
 app.include_router(project_routes.router)
 app.include_router(contact_routes.router)
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}

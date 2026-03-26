@@ -7,6 +7,6 @@ from app.schemas.project_schema import ProjectResponse
 router = APIRouter()
 
 
-@router.get("/projects", response_model=list[ProjectResponse])
+@router.api_route("/projects", methods=["GET", "HEAD"], response_model=list[ProjectResponse])
 def fetch_projects(db: Session = Depends(get_db)):
     return get_all_projects(db)
